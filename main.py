@@ -1,6 +1,6 @@
 """
 A Bot for tracking who joins/leaves a discord voice channel,
-as well as adding a several other functions
+as well as adding a several other functions.
 """
 
 import random as rand
