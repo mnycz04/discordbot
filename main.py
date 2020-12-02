@@ -29,7 +29,7 @@ intents.members = True
 intents.messages = True
 client = commands.Bot(command_prefix='$', intents=intents)
 degree_sign = u'\N{DEGREE SIGN}'
-TOKEN = 'NzU2MzI3MDQ0MjA3NjA3OTUw.X2QOcw._Am3XABpF3H0hAJaKGMPpov-ASI'
+TOKEN = 'NzU2MzI3MDQ0MjA3NjA3OTUw.X2QOcw.k0PsBPjshmr9xP5Kyf7903D6OK4'
 
 
 @client.event
