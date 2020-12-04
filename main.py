@@ -9,12 +9,13 @@ import time
 import discord
 from discord.ext import commands
 
+import logger
 import members as persons
+import morsecode
 import reddit
 import voipstates
 import weather as weth
-import morsecode
-import logger
+from mytoken import TOKEN
 
 __author__ = 'Michael Nycz'
 __version__ = '5.1.1'
