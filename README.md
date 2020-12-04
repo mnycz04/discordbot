@@ -10,17 +10,17 @@
 # Optional Parameter is the name of the subreddit, no spaces or special characters
 # Example
 > $r wholesome
-> returns a post from the r/wholesome subreddit
+# returns a post from the r/wholesome subreddit
 
 > $sub cursedimages
-> returns a post from the r/cursedimages subreddit
+# returns a post from the r/cursedimages subreddit
 
 # Command test:
 # Send a test message to the text channel, optional paramter is a single word that
 # will be repeated by the bot
 # Example
 > $test Hello
-> returns "Hello"
+# returns "Hello"
 
 $ Command weather:
 # aliases = w
@@ -33,7 +33,7 @@ $ Command weather:
 > returns the current weather report for New York City, NY
 
 > $w Beachwood, NJ
-> returns the current weather report for Beachwood, NJ
+# returns the current weather report for Beachwood, NJ
 
 # Command random:
 # aliases = rand
@@ -45,7 +45,7 @@ $ Command weather:
 > returns a random integer between 0 and 100
 
 > $random -100 1000
-> returns a random integer between -100 and 1000 (You must enter both bounds)
+# returns a random integer between -100 and 1000 (You must enter both bounds)
 
 # Command sarcasm:
 # aliases = sar
@@ -55,7 +55,7 @@ $ Command weather:
 # as it has a slim chance to break and send an error
 # Example
 > $sar Hello World!
-> returns something similar to "hEllO wOrLD!"
+# returns something similar to "hEllO wOrLD!"
 
 # Command delete:
 # aliases = purge
@@ -65,11 +65,10 @@ $ Command weather:
 # deletes 100 messages
 
 > $delete 10
-> deletes 10 messages
+# deletes 10 messages
 
 # Command morse:
 # aliases = m, morsecode
 # Converts a phrase into morse code, and returns it to the channel
 > $morse Hello World!
-> returns the morse code for Hello World
-
+# returns the morse code for Hello World
