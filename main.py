@@ -15,7 +15,6 @@ import voipstates
 import weather as weth
 import morsecode
 import logger
-from token import TOKEN
 
 __author__ = 'Michael Nycz'
 __version__ = '5.1.1'
