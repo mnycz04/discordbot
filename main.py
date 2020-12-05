@@ -265,4 +265,22 @@ async def morse(ctx, *, phrase=None):
     await ctx.send(morse_code)
 
 
+@client.command(aliases=['mcc', 'halo'])
+async def masterchief(ctx):
+    """
+    Plays the halo theme song in a voice channel
+    """
+    await ctx.message.delete()
+    logger.log_actions(f'{ctx.author.name} has played the Halo Theme Song')
+    if client.voice_clients:
+        return None
+
+    channel = ctx.author.voice.channel
+    await channel.connect()
+
+    voice_client = discord.utils.get(client.voice_clients)
+    audio_source = discord.FFmpegPCMAudio('mcc.mp3')
+    voice_client.play(audio_source)
+
+
 client.run(TOKEN)
