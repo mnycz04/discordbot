@@ -1,5 +1,6 @@
 # Files
-mcc.mp3
+*.mp3
+*webm
 mytoken.py
 
 # Directories
