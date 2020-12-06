@@ -8,6 +8,7 @@ import time
 
 import discord
 from discord.ext import commands
+import youtube_dl
 
 import logger
 import members as persons
@@ -30,6 +31,14 @@ intents.members = True
 intents.messages = True
 client = commands.Bot(command_prefix='$', intents=intents)
 degree_sign = u'\N{DEGREE SIGN}'
+YTDL_OPTIONS = {'format': 'bestaudio[ext=webm]',
+                'extractaudio': True,
+                'restrictfilenames': True,
+                'outtmpl': 'C:/Users/mnycz/PycharmProjects/discordbot/music/%(id)s.%(ext)s',
+                'quiet': True,
+                'noplaylist': True,
+                'default_search': 'auto'}
+ytdl = youtube_dl.YoutubeDL(YTDL_OPTIONS)
 
 
 @client.event
@@ -56,7 +65,7 @@ async def red(ctx, sub='memes'):
     """
     await ctx.message.delete()
     logger.log_actions(f'{ctx.message.author.name} requested a reddit post from the r/{sub} subreddit.')
-    
+
     try:
         post = await reddit.reddit_post(sub)
     except ConnectionRefusedError:
@@ -281,6 +290,46 @@ async def masterchief(ctx):
     voice_client = discord.utils.get(client.voice_clients)
     audio_source = discord.FFmpegPCMAudio('mcc.mp3')
     voice_client.play(audio_source)
+
+
+@client.command(aliases=['join'])
+async def summon(ctx):
+    """Joins a voice channel as a voice client."""
+
+    await ctx.message.delete()
+
+    if client.voice_clients:
+        return None
+
+    channel = ctx.author.voice.channel
+    await channel.connect()
+
+
+@client.command(aliases=['p'])
+async def play(ctx, *, query=None):
+    """
+    Finds a music youtube video and downloads it using FFmpeg
+    """
+    await ctx.message.delete()
+
+    if client.voice_clients:
+        pass
+    else:
+        channel = ctx.author.voice.channel
+        await channel.connect()
+
+    voice_client = discord.utils.get(client.voice_clients)
+    if not voice_client.is_playing():
+        query = """""".join(query[:])
+        audio = ytdl.extract_info(query)
+        audio_id = audio['entries'][0]['id']
+        audio_location = discord.FFmpegPCMAudio(f"music/{audio_id}.webm")
+        title = audio['entries'][0]['title']
+        voice_client.play(audio_location)
+        await ctx.send(f"Currently playing {title}: Requested by @{ctx.message.author.name}.",
+                       delete_after=float(audio['entries'][0]['duration']))
+    else:
+        await ctx.send('Playing song already', delete_after=2.0)
 
 
 client.run(TOKEN)
