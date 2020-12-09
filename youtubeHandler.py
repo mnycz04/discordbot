@@ -24,11 +24,9 @@ def download_song(query):
     print(song)
     if 'entries' in song:
         if 'title' in song['entries'][0]:
-            print(song['entries'][0]['title'])
             song_info.append(song['entries'][0]['title'])
             song_info.append(song['entries'][0]['id'])
     elif 'title' in song:
-        print(song['title'])
         song_info.append(song['title'])
         song_info.append(song['id'])
 
