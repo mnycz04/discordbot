@@ -17,9 +17,10 @@ import voipstates
 import weather as weth
 from mytoken import TOKEN
 import youtubeHandler
+from schedule import check_time
 
 __author__ = 'Michael Nycz'
-__version__ = '5.1.2'
+__version__ = '5.2.2'
 
 print(f'{__author__} [{__version__}]')
 
@@ -319,6 +320,20 @@ async def play(ctx, *, query=None):
         voice_client.play(song_location)
     else:
         await ctx.send('Playing song already', delete_after=2.0)
+
+
+@client.command(aliases=['shed'])
+async def schedule(ctx):
+    """Returns an image of our school Hybrid Schedule"""
+
+    await ctx.message.delete()
+    logger.log_actions(f'{ctx.message.author.name} requested the schedule.')
+
+    embed = discord.Embed(title=f'{check_time().current_period}')
+    embed.set_image(url="https://i.imgur.com/IdLNJW0.png")
+    embed.set_footer(text=f'{check_time().next_period}')
+
+    await ctx.send(embed=embed, delete_after=10)
 
 
 client.run(TOKEN)
