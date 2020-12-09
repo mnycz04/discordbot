@@ -8,7 +8,6 @@ import time
 
 import discord
 from discord.ext import commands
-import youtube_dl
 
 import logger
 import members as persons
@@ -17,9 +16,10 @@ import reddit
 import voipstates
 import weather as weth
 from mytoken import TOKEN
+import youtubeHandler
 
 __author__ = 'Michael Nycz'
-__version__ = '5.1.1'
+__version__ = '5.1.2'
 
 print(f'{__author__} [{__version__}]')
 
@@ -31,14 +31,6 @@ intents.members = True
 intents.messages = True
 client = commands.Bot(command_prefix='$', intents=intents)
 degree_sign = u'\N{DEGREE SIGN}'
-YTDL_OPTIONS = {'format': 'bestaudio/best',
-                'extractaudio': True,
-                'restrictfilenames': True,
-                'outtmpl': 'C:/Users/mnycz/PycharmProjects/discordbot/music/%(id)s.%(ext)s',
-                'quiet': True,
-                'noplaylist': True,
-                'default_search': 'auto'}
-ytdl = youtube_dl.YoutubeDL(YTDL_OPTIONS)
 
 
 @client.event
@@ -318,18 +310,13 @@ async def play(ctx, *, query=None):
         channel = ctx.author.voice.channel
         await channel.connect()
 
-    logger.log_actions(f'{ctx.message.author.name} has played {query}.')
-
     voice_client = discord.utils.get(client.voice_clients)
     if not voice_client.is_playing():
         query = """""".join(query[:])
-        audio = ytdl.extract_info(query)
-        audio_id = audio['entries'][0]['id']
-        audio_location = discord.FFmpegPCMAudio(f"music/{audio_id}.webm")
-        title = audio['entries'][0]['title']
-        voice_client.play(audio_location)
-        await ctx.send(f"Currently playing {title}: Requested by @{ctx.message.author.name}.",
-                       delete_after=float(audio['entries'][0]['duration']))
+        song_info = youtubeHandler.download_song(query)
+        logger.log_actions(f'{ctx.message.author.name} has played {song_info[0]}.')
+        song_location = discord.FFmpegPCMAudio(f"music/{song_info[1]}.webm")
+        voice_client.play(song_location)
     else:
         await ctx.send('Playing song already', delete_after=2.0)
 
