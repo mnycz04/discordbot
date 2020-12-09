@@ -31,7 +31,7 @@ intents.members = True
 intents.messages = True
 client = commands.Bot(command_prefix='$', intents=intents)
 degree_sign = u'\N{DEGREE SIGN}'
-YTDL_OPTIONS = {'format': 'bestaudio[ext=webm]',
+YTDL_OPTIONS = {'format': 'bestaudio/best',
                 'extractaudio': True,
                 'restrictfilenames': True,
                 'outtmpl': 'C:/Users/mnycz/PycharmProjects/discordbot/music/%(id)s.%(ext)s',
@@ -317,6 +317,8 @@ async def play(ctx, *, query=None):
     else:
         channel = ctx.author.voice.channel
         await channel.connect()
+
+    logger.log_actions(f'{ctx.message.author.name} has played {query}.')
 
     voice_client = discord.utils.get(client.voice_clients)
     if not voice_client.is_playing():
