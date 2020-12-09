@@ -21,7 +21,6 @@ def download_song(query):
     song = ytdl.extract_info(query)
     song_info = []
 
-    print(song)
     if 'entries' in song:
         if 'title' in song['entries'][0]:
             song_info.append(song['entries'][0]['title'])
