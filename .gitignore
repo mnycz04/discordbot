@@ -2,6 +2,7 @@
 *.mp3
 *webm
 mytoken.py
+*png
 
 # Directories
 /logs/
