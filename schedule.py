@@ -5,9 +5,11 @@ import time
 
 class TimeInfo:
     """Contains Time Info"""
+
     def __int__(self, current_period='None', next_period='None'):
         self.current_period = current_period
         self.next_period = next_period
+
 
 def check_time():
     """Returns the current period of class."""

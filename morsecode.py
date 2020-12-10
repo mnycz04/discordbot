@@ -33,4 +33,3 @@ def convert_to_morse_code(phrase):
     translation = ' '.join(translation_list[:]).strip()
 
     return translation
-

@@ -79,4 +79,3 @@ def get_server_members(guild):
                         break
     guild_current = GuildInfo(guild_ids, guild_names, guild_members)
     return guild_current
-
