@@ -7,7 +7,7 @@ import youtube_dl
 YTDL_OPTIONS = {'format': 'bestaudio/best',
                 'extractaudio': True,
                 'restrictfilenames': True,
-                'outtmpl': 'C:/Users/mnycz/PycharmProjects/discordbot/music/%(id)s.%(ext)s',
+                'outtmpl': 'music/%(id)s.%(ext)s',
                 'quiet': True,
                 'noplaylist': True,
                 'default_search': 'auto'}

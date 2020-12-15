@@ -1,6 +1,7 @@
 """
 A Bot for tracking who joins/leaves a discord voice channel,
 as well as adding a several other functions such as weather tracking and morse code transcription.
+Written by Michael Nycz
 """
 
 import random as rand
@@ -253,6 +254,7 @@ async def delete(ctx, messages=100):
 async def morse(ctx, *, phrase=None):
     """
     Converts a string to morse code
+
     :param ctx: context
     :param phrase: The Phrase to translate
     :return: Returns a morse code translation

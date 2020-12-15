@@ -3,7 +3,9 @@
 *webm
 mytoken.py
 *png
+.xml
 
 # Directories
 /logs/
 /music/
+/.idea/
