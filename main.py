@@ -8,6 +8,7 @@ import time
 
 import discord
 from discord.ext import commands
+import ffmpy
 
 import logger
 import members as persons
@@ -316,6 +317,7 @@ async def play(ctx, *, query=None):
         query = """""".join(query[:])
         song_info = youtubeHandler.download_song(query)
         logger.log_actions(f'{ctx.message.author.name} has played {song_info[0]}.')
+        ffmpy.FFmpeg(f"ffmpeg -i {song_info[1]}.m4a {song_info[1]}.webm")
         song_location = discord.FFmpegPCMAudio(f"music/{song_info[1]}.webm")
         voice_client.play(song_location)
     else:
