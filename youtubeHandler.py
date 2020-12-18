@@ -7,7 +7,7 @@ import youtube_dl
 YTDL_OPTIONS = {'format': 'bestaudio/best',
                 'extractaudio': True,
                 'restrictfilenames': True,
-                'outtmpl': 'music/%(id)s.%(ext)s',
+                'outtmpl': 'music/%(id)s',
                 'quiet': True,
                 'noplaylist': True,
                 'default_search': 'auto'}

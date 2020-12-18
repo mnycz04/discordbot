@@ -319,8 +319,8 @@ async def play(ctx, *, query=None):
         query = """""".join(query[:])
         song_info = youtubeHandler.download_song(query)
         logger.log_actions(f'{ctx.message.author.name} has played {song_info[0]}.')
-        ffmpy.FFmpeg(f"ffmpeg -i {song_info[1]}.m4a {song_info[1]}.webm")
-        song_location = discord.FFmpegPCMAudio(f"music/{song_info[1]}.webm")
+        # ffmpy.FFmpeg(f"ffmpeg -i {song_info[1]}.m4a {song_info[1]}.webm")
+        song_location = discord.FFmpegPCMAudio(f"music/{song_info[1]}")
         voice_client.play(song_location)
     else:
         await ctx.send('Playing song already', delete_after=2.0)
