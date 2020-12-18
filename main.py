@@ -9,7 +9,6 @@ import time
 
 import discord
 from discord.ext import commands
-import ffmpy
 
 import logger
 import members as persons
@@ -17,12 +16,12 @@ import morsecode
 import reddit
 import voipstates
 import weather as weth
-from mytoken import TOKEN
 import youtubeHandler
+from mytoken import TOKEN
 from schedule import check_time
 
 __author__ = 'Michael Nycz'
-__version__ = '5.2.2'
+__version__ = '5.3.0'
 
 print(f'{__author__} [{__version__}]')
 
@@ -324,6 +323,20 @@ async def play(ctx, *, query=None):
         voice_client.play(song_location)
     else:
         await ctx.send('Playing song already', delete_after=2.0)
+
+
+@client.command(aliases=['n', 'next', 's'])
+async def skip(ctx):
+    """Skips the currently playing song"""
+
+    await ctx.message.delete()
+    logger.log_actions(f'{ctx.message.author.name} has skipped the currently playing song.')
+
+    voice_client = discord.utils.get(client.voice_clients)
+    if voice_client.is_playing():
+        voice_client.stop()
+    else:
+        await ctx.send("Nothing is currently playing. Use $p to play something.", delete_after=5)
 
 
 @client.command(aliases=['shed'])
