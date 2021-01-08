@@ -211,7 +211,7 @@ async def on_message(message):
     """
     chance = rand.random()
     reply = """"""
-    if chance <= 0.5:
+    if chance <= 0.05:
         if message.author.name == 'Breezus':
             await message.delete()
             logger.log_actions('Bryan has been mocked.')
