@@ -40,7 +40,7 @@ connector = mcsc.Connection()
 
 # noinspection PyUnresolvedReferences
 @client.command()
-async def mc():
+async def mc(ctx):
     """
     Checks if MC is up"""
     global system_message_channel
@@ -48,7 +48,7 @@ async def mc():
     print(connector.is_connected)
     if connector.is_connected:
         embed = discord.Embed(title='The MC Server is Running!', description="Access on 173.70.56.251:25566")
-        await system_message_channel.send(embed=embed, delete_after=10)
+        await ctx.send(embed=embed, delete_after=10)
 
 
 @client.event
