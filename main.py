@@ -11,6 +11,7 @@ import discord
 from discord.ext import commands
 
 import logger
+import mcServerConnection as mcsc
 import members as persons
 import morsecode
 import reddit
@@ -33,6 +34,21 @@ intents.members = True
 intents.messages = True
 client = commands.Bot(command_prefix='$', intents=intents)
 degree_sign = u'\N{DEGREE SIGN}'
+system_message_channel = None
+connector = mcsc.Connection()
+
+
+# noinspection PyUnresolvedReferences
+@client.command()
+async def mc():
+    """
+    Checks if MC is up"""
+    global system_message_channel
+    connector.ping_server('173.70.56.251', 25566)
+    print(connector.is_connected)
+    if connector.is_connected:
+        embed = discord.Embed(title='The MC Server is Running!', description="Access on 173.70.56.251:25566")
+        await system_message_channel.send(embed=embed, delete_after=10)
 
 
 @client.event
@@ -41,10 +57,13 @@ async def on_ready():
     Prompts Discords API for Bot connection
     """
     try:
-        global server, guild
+        global server, guild, system_message_channel
         guild = client.get_guild(576195727974203413)
         print('Bot is ready.')
         server = persons.get_server_members(guild)
+        for channel in guild.channels:
+            if channel.name == 'general':
+                system_message_channel = channel
     except RuntimeError:
         raise RuntimeError('Unable to initialize guild.')
 
@@ -318,7 +337,6 @@ async def play(ctx, *, query=None):
         query = """""".join(query[:])
         song_info = youtubeHandler.download_song(query)
         logger.log_actions(f'{ctx.message.author.name} has played {song_info[0]}.')
-        # ffmpy.FFmpeg(f"ffmpeg -i {song_info[1]}.m4a {song_info[1]}.webm")
         song_location = discord.FFmpegPCMAudio(f"music/{song_info[1]}")
         voice_client.play(song_location)
     else:
