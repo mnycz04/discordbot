@@ -59,7 +59,7 @@ async def check_server_status(ip, port):
             was_server_up = False
             embed = discord.Embed(title='The Modded Server has been closed.')
             await system_message_channel.send(embed=embed, delete_after=10)
-        await asyncio.sleep(5)
+        await asyncio.sleep(1)
 
 
 @client.event
