@@ -39,6 +39,7 @@ system_message_channel = None
 was_server_up = False
 
 
+# noinspection PyUnresolvedReferences
 async def check_server_status(ip, port):
     """
     param str ip: Ip address to check
@@ -381,7 +382,6 @@ async def schedule(ctx):
     embed.set_footer(text=f'{check_time().next_period}')
 
     await ctx.send(embed=embed, delete_after=10)
-
 
 
 client.run(TOKEN)
