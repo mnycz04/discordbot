@@ -49,7 +49,6 @@ async def check_server_status(ip, port):
     global was_server_up
     while not client.is_closed():
         is_up = mcsc.ping_server(ip, port)
-        print('Checking Server')
         if not was_server_up and is_up:
             was_server_up = True
             embed = discord.Embed(title='The Modded Server is now Up!',
