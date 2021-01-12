@@ -6,6 +6,7 @@ Written by Michael Nycz
 
 import random as rand
 import time
+import asyncio
 
 import discord
 from discord.ext import commands
@@ -35,20 +36,30 @@ intents.messages = True
 client = commands.Bot(command_prefix='$', intents=intents)
 degree_sign = u'\N{DEGREE SIGN}'
 system_message_channel = None
-connector = mcsc.Connection()
+was_server_up = False
 
 
-# noinspection PyUnresolvedReferences
-@client.command()
-async def mc(ctx):
+async def check_server_status(ip, port):
     """
-    Checks if MC is up"""
-    global system_message_channel
-    connector.ping_server('173.70.56.251', 25566)
-    print(connector.is_connected)
-    if connector.is_connected:
-        embed = discord.Embed(title='The MC Server is Running!', description="Access on 173.70.56.251:25566")
-        await ctx.send(embed=embed, delete_after=10)
+    param str ip: Ip address to check
+    param int port: port to TCP connect to
+    """
+    await client.wait_until_ready()
+    global was_server_up
+    while not client.is_closed():
+        is_up = mcsc.ping_server(ip, port)
+        print('Checking Server')
+        if not was_server_up and is_up:
+            was_server_up = True
+            embed = discord.Embed(title='The Modded Server is now Up!',
+                                  description="""Download the modpack at https://bit.ly/38CPnxB
+                                                 Connect on: 173.70.56.251:25566""")
+            await system_message_channel.send(embed=embed, delete_after=20)
+        elif was_server_up and not is_up:
+            was_server_up = True
+            embed = discord.Embed(title='The Modded Server has been closed.')
+            await system_message_channel.send(embed=embed, delete_after=10)
+        await asyncio.sleep(5)
 
 
 @client.event
@@ -66,6 +77,7 @@ async def on_ready():
                 system_message_channel = channel
     except RuntimeError:
         raise RuntimeError('Unable to initialize guild.')
+    client.loop.create_task(check_server_status('173.70.56.251', 25566))
 
 
 @client.command(aliases=['r', 'sub'])
@@ -369,6 +381,7 @@ async def schedule(ctx):
     embed.set_footer(text=f'{check_time().next_period}')
 
     await ctx.send(embed=embed, delete_after=10)
+
 
 
 client.run(TOKEN)
