@@ -39,6 +39,29 @@ system_message_channel = None
 was_server_up = False
 
 
+@client.command()
+async def ping(ctx, request='173.70.56.251:25566'):
+    await ctx.message.delete()
+
+    if ':' not in request:
+        await ctx.send('Invalid request. Use the format "0.0.0.0:0000', delete_after=10)
+        return False
+
+    colon_index = request.find(':')
+    ip = request[:colon_index]
+    port = request[colon_index+1:]
+    logger.log_actions(f"{ctx.message.author.name} pinged {ip}, on port {port}.")
+
+    try:
+        connection = mcsc.ping_server(ip, int(port))
+        if connection:
+            await ctx.send(f"Connection successful to {ip}, on port {port}.", delete_after=10)
+        else:
+            raise Exception
+    except Exception:
+        await ctx.send(f"Connection to {ip}, on port {port}, failed.", delete_after=10)
+
+
 # noinspection PyUnresolvedReferences
 async def check_server_status(ip, port):
     """
