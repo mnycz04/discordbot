@@ -3,7 +3,7 @@
 import socket
 
 
-def ping_server( ip, port):
+def ping_server(ip, port):
     """
     Pings a server to see if its running
     :param str ip: Host names IP
