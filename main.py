@@ -40,7 +40,7 @@ was_server_up = False
 
 
 @client.command()
-async def ping(ctx, request='173.70.56.251:25566'):
+async def ping(ctx, request='CalcCraft.us.to:25565'):
     await ctx.message.delete()
 
     if ':' not in request:
@@ -76,8 +76,8 @@ async def check_server_status(ip, port):
             if not was_server_up and is_up:
                 was_server_up = True
                 embed = discord.Embed(title='The Modded Server is now Up!',
-                                      description="""Download the modpack at https://bit.ly/38CPnxB
-                                                     Connect on: 173.70.56.251:25566""")
+                                      description="""Download the modpack at https://bit.ly/2KzTtxi
+                                                     Connect on: CalcCraft.us.to""")
                 await system_message_channel.send(embed=embed, delete_after=20)
             elif was_server_up and not is_up:
                 was_server_up = False
@@ -103,7 +103,7 @@ async def on_ready():
                 system_message_channel = channel
     except RuntimeError:
         raise RuntimeError('Unable to initialize guild.')
-    client.loop.create_task(check_server_status('173.70.56.251', 25566))
+    client.loop.create_task(check_server_status('CalcCraft.us.to', 25565))
 
 
 @client.command(aliases=['r', 'sub'])
