@@ -63,7 +63,7 @@ async def ping(ctx, request='CalcCraft.us.to:25565'):
 
 
 # noinspection PyUnresolvedReferences
-async def check_server_status(ip, port):
+async def check_server_status(ip: str, port: int):
     """
     param str ip: Ip address to check
     param int port: port to TCP connect to
